@@ -8,29 +8,14 @@ import java.util.List;
 
 public class InputView {
     public static final int INDEX_OF_MENU_NAME = 0;
-    public static final int INDEX_OF_MENU_QUANTITY = 0;
+    public static final int INDEX_OF_MENU_QUANTITY = 1;
 
     public int askExpectedVisitDate() {
-        return parseInt(Console.readLine(), true);
+        return validateVisitDateInputFormat(Console.readLine());
     }
 
     public List<String> askExpectedMenuItems() {
         return validate(Console.readLine());
-    }
-
-    private int parseInt(String input, boolean isExpectedVisitDate) {
-        try {
-            int number = Integer.parseInt(input);
-            if (number < 0) {
-                throw new IllegalArgumentException(ErrorMessage.INVALID_MENU_FORMAT.getMessage());
-            }
-            return number;
-        } catch (NumberFormatException e) {
-            if (isExpectedVisitDate) {
-                throw new IllegalArgumentException(ErrorMessage.INVALID_DAYS_IN_DECEMBER.getMessage());
-            }
-            throw new IllegalArgumentException(ErrorMessage.INVALID_MENU_FORMAT.getMessage());
-        }
     }
 
     private List<String> validate(String inputExpectedMenuItems) {
@@ -43,11 +28,31 @@ public class InputView {
             if (parts.length != 2) {
                 throw new IllegalArgumentException(ErrorMessage.INVALID_MENU_FORMAT.getMessage());
             }
-            int quantity = parseInt(parts[INDEX_OF_MENU_QUANTITY], false);
+            int quantity = validateMenuQuantityInputFormat(parts[INDEX_OF_MENU_QUANTITY]);
             menuItems.add(parts[INDEX_OF_MENU_NAME]);
             menuItems.add(String.valueOf(quantity));
         }
 
         return menuItems;
+    }
+
+    private int validateVisitDateInputFormat(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_DAYS_IN_DECEMBER.getMessage());
+        }
+    }
+
+    private int validateMenuQuantityInputFormat(String input) {
+        try {
+            int inputQuantity = Integer.parseInt(input);
+            if (inputQuantity < 0) {
+                throw new IllegalArgumentException(ErrorMessage.INVALID_MENU_FORMAT.getMessage());
+            }
+            return inputQuantity;
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_MENU_FORMAT.getMessage());
+        }
     }
 }
