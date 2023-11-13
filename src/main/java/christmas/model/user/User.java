@@ -15,10 +15,11 @@ public class User {
     private LocalDate validate(int expectedVisitDate) {
         final int YEAR = 2023;
         final int MONTH = 12;
+
         try {
             return LocalDate.of(YEAR, MONTH, expectedVisitDate);
         } catch (DateTimeException e) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_DATE_OF_DECEMBER.getMessage());
+            throw new IllegalArgumentException(ErrorMessage.INVALID_DAYS_IN_DECEMBER.getMessage());
         }
     }
 }
