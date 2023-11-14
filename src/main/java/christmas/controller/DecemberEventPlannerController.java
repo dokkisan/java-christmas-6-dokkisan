@@ -4,6 +4,7 @@ import christmas.OperationMessage;
 import christmas.model.menu.MenuManager;
 import christmas.model.user.User;
 import christmas.util.DateConverter;
+import christmas.util.EventCalculator;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
@@ -26,6 +27,7 @@ public class DecemberEventPlannerController {
         Map<String, Integer> menuItems = getExpectedMenuItems();
         User user = new User(visitDate, menuItems);
         outputView.printOrderedMenuItems(menuItems);
+        outputView.print(EventCalculator.calculateTotalOrderAmountBeforeDiscount(menuItems));
     }
 
     private LocalDate getExpectedVisitDate() {
