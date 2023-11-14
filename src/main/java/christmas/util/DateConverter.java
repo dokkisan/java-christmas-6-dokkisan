@@ -22,4 +22,10 @@ public class DateConverter {
     public static DayOfWeek convertToDayOfWeek(LocalDate visitDate) {
         return visitDate.getDayOfWeek();
     }
+
+    public static int calculateDaysUntilChristmas(LocalDate date) {
+        final LocalDate CHRISTMAS_IN_2023 = LocalDate.of(2023, 12, 25);
+
+        return CHRISTMAS_IN_2023.getDayOfMonth() - date.getDayOfMonth();
+    }
 }

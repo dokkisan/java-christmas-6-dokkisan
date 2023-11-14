@@ -11,6 +11,7 @@ public class EventManager {
         checkWeekdayDiscountPolicy(visitDate, menuItems);
         checkWeekendDiscountPolicy(visitDate, menuItems);
         checkSpecialDiscountPolicy(visitDate);
+        checkChristmasDDayDiscountPolicy(visitDate);
         return benefits;
     }
 
@@ -33,5 +34,12 @@ public class EventManager {
         benefits.add(new EventBenefitDetails(
                 DecemberEvents.SPECIAL_DISCOUNT.getName(),
                 specialDiscountPolicy.calculateBenefitAmount(visitDate)));
+    }
+
+    private void checkChristmasDDayDiscountPolicy(LocalDate visitDate) {
+        ChristmasDDayDiscountPolicy christmasDDayDiscountPolicy = new ChristmasDDayDiscountPolicy();
+        benefits.add(new EventBenefitDetails(
+                DecemberEvents.CHRISTMAS_D_DAY.getName(),
+                christmasDDayDiscountPolicy.calculateBenefitAmount(visitDate)));
     }
 }
