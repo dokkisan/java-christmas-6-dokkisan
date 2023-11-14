@@ -10,21 +10,26 @@ import java.util.List;
 import java.util.Map;
 
 public class WeekdayDiscountPolicy {
+    private final int BENEFIT_AMOUNT_UNIT = 2_023;
     private final List<DayOfWeek> WEEKDAYS = new ArrayList<>(List.of(DayOfWeek.SUNDAY, DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY));
 
-
     public int calculateBenefitAmount(LocalDate visitDate, Map<String, Integer> menuItemsOrdered) {
-        if (isWeekday(visitDate)) {
-            int quantity = checkDessertOrderQuantity(menuItemsOrdered);
-            if (quantity > 0) {
-                return calculateTotalBenefitAmount(quantity);
-            }
+        int benefitAmount = calculateBenefitAmountByVisitOnWeekdays(visitDate);
+        if (benefitAmount > 0) {
+            return benefitAmount + calculateDiscountAmountByDessertOrder(menuItemsOrdered);
+        }
+        return benefitAmount;
+    }
+
+    private int calculateBenefitAmountByVisitOnWeekdays(LocalDate visitDate) {
+        if (WEEKDAYS.stream().anyMatch(day -> day.equals(DateConverter.convertToDayOfWeek(visitDate)))) {
+            return BENEFIT_AMOUNT_UNIT;
         }
         return 0;
     }
 
-    private boolean isWeekday(LocalDate visitDate) {
-        return WEEKDAYS.stream().anyMatch(day -> day.equals(DateConverter.convertToDayOfWeek(visitDate)));
+    private int calculateDiscountAmountByDessertOrder(Map<String, Integer> orderedMenuItems) {
+        return calculateBenefitAmountBy(checkDessertOrderQuantity(orderedMenuItems));
     }
 
     private int checkDessertOrderQuantity(Map<String, Integer> orderedMenuItems) {
@@ -38,8 +43,7 @@ public class WeekdayDiscountPolicy {
         return count;
     }
 
-    private int calculateTotalBenefitAmount(int orderQuantity) {
-        final int DISCOUNT_AMOUNT_PER_DESSERT_ORDER = 2_023;
-        return orderQuantity * DISCOUNT_AMOUNT_PER_DESSERT_ORDER;
+    private int calculateBenefitAmountBy(int orderQuantity) {
+        return orderQuantity * BENEFIT_AMOUNT_UNIT;
     }
 }
