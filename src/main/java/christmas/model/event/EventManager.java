@@ -8,14 +8,22 @@ public class EventManager {
     public List<EventBenefitDetails> benefits;
 
     private List<EventBenefitDetails> getEventBenefitDetails(LocalDate visitDate, Map<String, Integer> menuItems) {
-        checkWeekdayDiscount(visitDate, menuItems);
+        checkWeekdayDiscountPolicy(visitDate, menuItems);
+        checkWeekendDiscountPolicy(visitDate, menuItems);
         return benefits;
     }
 
-    private void checkWeekdayDiscount(LocalDate visitDate, Map<String, Integer> menuItems) {
-        WeekdayDiscount weekdayDiscount = new WeekdayDiscount();
+    private void checkWeekdayDiscountPolicy(LocalDate visitDate, Map<String, Integer> menuItems) {
+        WeekdayDiscountPolicy weekdayDiscountPolicy = new WeekdayDiscountPolicy();
         benefits.add(new EventBenefitDetails(
                 DecemberEvents.WEEKDAY_DISCOUNT.getName(),
-                weekdayDiscount.calculateBenefitAmount(visitDate, menuItems)));
+                weekdayDiscountPolicy.calculateBenefitAmount(visitDate, menuItems)));
+    }
+
+    private void checkWeekendDiscountPolicy(LocalDate visitDate, Map<String, Integer> menuItems) {
+        WeekendDiscountPolicy weekendDiscountPolicy = new WeekendDiscountPolicy();
+        benefits.add(new EventBenefitDetails(
+                DecemberEvents.WEEKDAY_DISCOUNT.getName(),
+                weekendDiscountPolicy.calculateBenefitAmount(visitDate, menuItems)));
     }
 }

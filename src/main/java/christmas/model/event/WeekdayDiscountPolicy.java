@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class WeekdayDiscount implements EventPolicyByVisitDate {
-    private final List<DayOfWeek> satisfiedDaysOfWeek = new ArrayList<>(List.of(DayOfWeek.SUNDAY, DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY));
+public class WeekdayDiscountPolicy {
+    private final List<DayOfWeek> weekdays = new ArrayList<>(List.of(DayOfWeek.SUNDAY, DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY));
 
 
     public int calculateBenefitAmount(LocalDate visitDate, Map<String, Integer> menuItemsOrdered) {
@@ -25,7 +25,7 @@ public class WeekdayDiscount implements EventPolicyByVisitDate {
 
     private boolean isWeekday(LocalDate visitDate) {
         DayOfWeek visitDayOfWeek = DataConverter.convertToDayOfWeek(visitDate);
-        return satisfiedDaysOfWeek.stream().anyMatch(day -> day.equals(visitDayOfWeek));
+        return weekdays.stream().anyMatch(day -> day.equals(visitDayOfWeek));
     }
 
     private int checkDessertOrderQuantity(Map<String, Integer> orderedMenuItems) {

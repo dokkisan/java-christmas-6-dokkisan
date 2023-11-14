@@ -4,6 +4,7 @@ import christmas.model.ErrorMessage;
 import christmas.util.DataConverter;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class MenuManager {
     private static final List<MenuItem> menu = new ArrayList<>(List.of(MenuItem.values()));
@@ -14,6 +15,12 @@ public class MenuManager {
         checkOnlyBeveragesOrdered(inputOrderMenus);
         checkTotalOrderCountLessThan20(inputOrderMenus);
         return DataConverter.convertToMapOfMenuItems(inputOrderMenus);
+    }
+
+    public static List<MenuItem> getMainDishes() {
+        return Arrays.stream(MenuItem.values())
+                .filter(menuItem -> menuItem.getCategory().equals(MenuCategory.MAIN_DISH))
+                .collect(Collectors.toList());
     }
 
     private static void checkForDuplicates(List<String> inputOrderMenus) {
