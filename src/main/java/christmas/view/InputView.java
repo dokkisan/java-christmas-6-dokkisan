@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InputView {
-    public static final int INDEX_OF_MENU_NAME = 0;
-    public static final int INDEX_OF_MENU_QUANTITY = 1;
 
     public int askExpectedVisitDate() {
         return validateVisitDateInputFormat(Console.readLine());
@@ -21,6 +19,8 @@ public class InputView {
     private List<String> validate(String inputExpectedMenuItems) {
         final String COMMA = ",";
         final String HYPHEN = "-";
+        final int INDEX_OF_MENU_NAME = 0;
+        final int INDEX_OF_MENU_QUANTITY = 1;
         List<String> menuItems = new ArrayList<>();
 
         for (String item : inputExpectedMenuItems.split(COMMA)) {

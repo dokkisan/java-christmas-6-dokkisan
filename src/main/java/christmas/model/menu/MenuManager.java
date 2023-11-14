@@ -28,12 +28,7 @@ public class MenuManager {
     }
 
     private static void checkMenuItemExist(List<String> inputOrderMenus) {
-        List<String> inputMenuNames = new ArrayList<>();
-        for (int i = 0; i < inputOrderMenus.size(); i++) {
-            if (i % 2 == 0) {
-                inputMenuNames.add(inputOrderMenus.get(i));
-            }
-        }
+        List<String> inputMenuNames = getOnlyMenuItemNames(inputOrderMenus);
         for (String name : inputMenuNames) {
             if (menu.stream().allMatch(menuItem -> menuItem.getName().equals(name))) {
                 throw new IllegalArgumentException(ErrorMessage.INVALID_MENU_FORMAT.getMessage());
@@ -42,16 +37,20 @@ public class MenuManager {
     }
 
     private static void checkOnlyBeveragesOrdered(List<String> inputOrderMenus) {
+        List<String> inputMenuNames = getOnlyMenuItemNames(inputOrderMenus);
+        if (inputMenuNames.stream().allMatch(MenuManager::isBeverage)) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_MENU_FORMAT.getMessage());
+        }
+    }
+
+    private static List<String> getOnlyMenuItemNames(List<String> inputOrderMenus) {
         List<String> inputMenuNames = new ArrayList<>();
         for (int i = 0; i < inputOrderMenus.size(); i++) {
             if (i % 2 == 0) {
                 inputMenuNames.add(inputOrderMenus.get(i));
             }
         }
-
-        if (inputMenuNames.stream().allMatch(MenuManager::isBeverage)) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_MENU_FORMAT.getMessage());
-        }
+        return inputMenuNames;
     }
 
     private static boolean isBeverage(String menuName) {
@@ -60,14 +59,18 @@ public class MenuManager {
 
     private static void checkTotalOrderCountLessThan20(List<String> inputOrderMenus) {
         int orderCount = 0;
+        orderCount = getOnlyOrderCount(inputOrderMenus, orderCount);
+        if (orderCount > 20) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_MENU_FORMAT.getMessage());
+        }
+    }
+
+    private static int getOnlyOrderCount(List<String> inputOrderMenus, int orderCount) {
         for (int i = 0; i < inputOrderMenus.size(); i++) {
             if (i % 2 != 0) {
                 orderCount += Integer.parseInt(inputOrderMenus.get(i));
             }
         }
-
-        if (orderCount > 20) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_MENU_FORMAT.getMessage());
-        }
+        return orderCount;
     }
 }
