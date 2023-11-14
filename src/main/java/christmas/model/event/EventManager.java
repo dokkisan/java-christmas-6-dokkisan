@@ -3,30 +3,34 @@ package christmas.model.event;
 import christmas.model.menu.MenuItem;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public class EventManager {
-    private List<EventBenefitDetails> benefits;
+    private static List<EventBenefitDetails> benefits;
 
-    public Optional<List<EventBenefitDetails>> getEventBenefitDetails(
+    public List<EventBenefitDetails> getEventBenefitDetails(
             int totalOrderAmountBeforeDiscount, LocalDate visitDate, Map<String, Integer> menuItems) {
-
-        if (!isSatisfied(totalOrderAmountBeforeDiscount)) {
-            return Optional.empty();
-        }
+        checkSatisfied(totalOrderAmountBeforeDiscount);
+        benefits = new ArrayList<>();
         checkWeekdayDiscountPolicy(visitDate, menuItems);
         checkWeekendDiscountPolicy(visitDate, menuItems);
         checkSpecialDiscountPolicy(visitDate);
         checkChristmasDDayDiscountPolicy(visitDate);
         checkGiftPolicy(totalOrderAmountBeforeDiscount, menuItems);
-        return Optional.ofNullable(benefits);
+        return benefits;
     }
 
-    private boolean isSatisfied(int totalOrderAmountBeforeDiscount) {
+    private List<EventBenefitDetails> checkSatisfied(int totalOrderAmountBeforeDiscount) {
         final int MIN_ORDER_AMOUNT = 10_000;
-        return !(totalOrderAmountBeforeDiscount < MIN_ORDER_AMOUNT);
+        List<EventBenefitDetails> notSatisfied = new ArrayList<>();
+        if (!(totalOrderAmountBeforeDiscount < MIN_ORDER_AMOUNT)) {
+            for (DecemberEvents event : DecemberEvents.values()) {
+                notSatisfied.add(new EventBenefitDetails(event.getName(), 1));
+            }
+        }
+        return notSatisfied;
     }
 
     private void checkWeekdayDiscountPolicy(LocalDate visitDate, Map<String, Integer> menuItems) {
