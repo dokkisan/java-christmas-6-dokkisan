@@ -32,6 +32,10 @@ public enum MenuItem {
         return name;
     }
 
+    public int getPrice() {
+        return price;
+    }
+
     public MenuCategory getCategory() {
         return category;
     }
