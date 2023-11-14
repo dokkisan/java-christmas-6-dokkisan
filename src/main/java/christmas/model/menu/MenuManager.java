@@ -1,7 +1,7 @@
 package christmas.model.menu;
 
 import christmas.model.ErrorMessage;
-import christmas.util.DataTypeConverter;
+import christmas.util.DataConverter;
 
 import java.util.*;
 
@@ -13,7 +13,7 @@ public class MenuManager {
         checkMenuItemExist(inputOrderMenus);
         checkOnlyBeveragesOrdered(inputOrderMenus);
         checkTotalOrderCountLessThan20(inputOrderMenus);
-        return DataTypeConverter.convertToMapOfMenuItems(inputOrderMenus);
+        return DataConverter.convertToMapOfMenuItems(inputOrderMenus);
     }
 
     private static void checkForDuplicates(List<String> inputOrderMenus) {
@@ -28,7 +28,7 @@ public class MenuManager {
     }
 
     private static void checkMenuItemExist(List<String> inputOrderMenus) {
-        List<String> inputMenuNames = getOnlyMenuItemNames(inputOrderMenus);
+        List<String> inputMenuNames = DataConverter.convertToMenusOnly(inputOrderMenus);
         for (String name : inputMenuNames) {
             if (menu.stream().allMatch(menuItem -> menuItem.getName().equals(name))) {
                 throw new IllegalArgumentException(ErrorMessage.INVALID_MENU_FORMAT.getMessage());
@@ -37,20 +37,10 @@ public class MenuManager {
     }
 
     private static void checkOnlyBeveragesOrdered(List<String> inputOrderMenus) {
-        List<String> inputMenuNames = getOnlyMenuItemNames(inputOrderMenus);
+        List<String> inputMenuNames = DataConverter.convertToMenusOnly(inputOrderMenus);
         if (inputMenuNames.stream().allMatch(MenuManager::isBeverage)) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_MENU_FORMAT.getMessage());
         }
-    }
-
-    private static List<String> getOnlyMenuItemNames(List<String> inputOrderMenus) {
-        List<String> inputMenuNames = new ArrayList<>();
-        for (int i = 0; i < inputOrderMenus.size(); i++) {
-            if (i % 2 == 0) {
-                inputMenuNames.add(inputOrderMenus.get(i));
-            }
-        }
-        return inputMenuNames;
     }
 
     private static boolean isBeverage(String menuName) {
