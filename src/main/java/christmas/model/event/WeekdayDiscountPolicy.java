@@ -1,7 +1,7 @@
 package christmas.model.event;
 
 import christmas.model.menu.MenuItem;
-import christmas.util.DataConverter;
+import christmas.util.DateConverter;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -24,7 +24,7 @@ public class WeekdayDiscountPolicy {
     }
 
     private boolean isWeekday(LocalDate visitDate) {
-        return WEEKDAYS.stream().anyMatch(day -> day.equals(DataConverter.convertToDayOfWeek(visitDate)));
+        return WEEKDAYS.stream().anyMatch(day -> day.equals(DateConverter.convertToDayOfWeek(visitDate)));
     }
 
     private int checkDessertOrderQuantity(Map<String, Integer> orderedMenuItems) {

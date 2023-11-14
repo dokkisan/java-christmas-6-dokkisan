@@ -3,11 +3,12 @@ package christmas.util;
 import christmas.model.ErrorMessage;
 
 import java.time.DateTimeException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 
-public class DateValidator {
+public class DateConverter {
 
-    public static LocalDate validate(int expectedVisitDate) {
+    public static LocalDate convertToLocalDate(int expectedVisitDate) {
         final int YEAR = 2023;
         final int MONTH = 12;
 
@@ -16,5 +17,9 @@ public class DateValidator {
         } catch (DateTimeException e) {
             throw new java.lang.IllegalArgumentException(ErrorMessage.INVALID_DAYS_IN_DECEMBER.getMessage());
         }
+    }
+
+    public static DayOfWeek convertToDayOfWeek(LocalDate visitDate) {
+        return visitDate.getDayOfWeek();
     }
 }

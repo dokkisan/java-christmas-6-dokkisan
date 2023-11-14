@@ -2,7 +2,7 @@ package christmas.model.event;
 
 import christmas.model.menu.MenuItem;
 import christmas.model.menu.MenuManager;
-import christmas.util.DataConverter;
+import christmas.util.DateConverter;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -24,7 +24,7 @@ public class WeekendDiscountPolicy {
     }
 
     private boolean isWeekend(LocalDate visitDate) {
-        return WEEKEND.stream().anyMatch(day -> day.equals(DataConverter.convertToDayOfWeek(visitDate)));
+        return WEEKEND.stream().anyMatch(day -> day.equals(DateConverter.convertToDayOfWeek(visitDate)));
     }
 
     private int checkMainDishOrderQuantity(Map<String, Integer> orderedMenuItems) {

@@ -1,7 +1,5 @@
 package christmas.util;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,10 +15,6 @@ public class DataConverter {
             menuItems.put(menuName, orderCount);
         }
         return menuItems;
-    }
-
-    public static DayOfWeek convertToDayOfWeek(LocalDate visitDate) {
-        return visitDate.getDayOfWeek();
     }
 
     public static List<String> convertToMenusOnly(List<String> inputOrderMenus) {

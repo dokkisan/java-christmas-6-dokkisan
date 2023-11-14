@@ -1,6 +1,6 @@
 package christmas.model.event;
 
-import christmas.util.DataConverter;
+import christmas.util.DateConverter;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -18,7 +18,7 @@ public class SpecialDiscountPolicy {
     }
 
     private boolean isSunday(LocalDate visitDate) {
-        return SUNDAY.equals(DataConverter.convertToDayOfWeek(visitDate));
+        return SUNDAY.equals(DateConverter.convertToDayOfWeek(visitDate));
     }
 
     private boolean isChristmas(LocalDate visitDate) {
