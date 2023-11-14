@@ -3,16 +3,27 @@ package christmas.model.event;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class EventManager {
-    public List<EventBenefitDetails> benefits;
+    private List<EventBenefitDetails> benefits;
 
-    private List<EventBenefitDetails> getEventBenefitDetails(LocalDate visitDate, Map<String, Integer> menuItems) {
+    public Optional<List<EventBenefitDetails>> getEventBenefitDetails(
+            int totalOrderAmountBeforeDiscount, LocalDate visitDate, Map<String, Integer> menuItems) {
+
+        if (!isSatisfied(totalOrderAmountBeforeDiscount)) {
+            return Optional.empty();
+        }
         checkWeekdayDiscountPolicy(visitDate, menuItems);
         checkWeekendDiscountPolicy(visitDate, menuItems);
         checkSpecialDiscountPolicy(visitDate);
         checkChristmasDDayDiscountPolicy(visitDate);
-        return benefits;
+        return Optional.ofNullable(benefits);
+    }
+
+    private boolean isSatisfied(int totalOrderAmountBeforeDiscount) {
+        final int MIN_ORDER_AMOUNT = 10_000;
+        return !(totalOrderAmountBeforeDiscount < MIN_ORDER_AMOUNT);
     }
 
     private void checkWeekdayDiscountPolicy(LocalDate visitDate, Map<String, Integer> menuItems) {
@@ -41,9 +52,5 @@ public class EventManager {
         benefits.add(new EventBenefitDetails(
                 DecemberEvents.CHRISTMAS_D_DAY.getName(),
                 christmasDDayDiscountPolicy.calculateBenefitAmount(visitDate)));
-    }
-
-    private void checkGiftPolicy() {
-
     }
 }

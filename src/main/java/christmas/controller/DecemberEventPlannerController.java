@@ -1,6 +1,8 @@
 package christmas.controller;
 
 import christmas.OperationMessage;
+import christmas.model.event.EventBenefitDetails;
+import christmas.model.event.EventManager;
 import christmas.model.menu.MenuManager;
 import christmas.model.user.User;
 import christmas.util.DateConverter;
@@ -11,6 +13,7 @@ import christmas.view.OutputView;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class DecemberEventPlannerController {
     private final InputView inputView;
@@ -27,7 +30,9 @@ public class DecemberEventPlannerController {
         Map<String, Integer> menuItems = getExpectedMenuItems();
         User user = new User(visitDate, menuItems);
         outputView.printOrderedMenuItems(menuItems);
-        outputView.print(EventCalculator.calculateTotalOrderAmountBeforeDiscount(menuItems));
+        int totalOrderAmountBeforeDiscount = EventCalculator.calculateTotalOrderAmountBeforeDiscount(menuItems);
+        outputView.print(totalOrderAmountBeforeDiscount);
+
     }
 
     private LocalDate getExpectedVisitDate() {
@@ -52,5 +57,11 @@ public class DecemberEventPlannerController {
                 outputView.print(e.getMessage());
             }
         }
+    }
+
+    private Optional<List<EventBenefitDetails>> getEventBenefitDetails(
+            int totalOrderAmountBeforeDiscount, LocalDate visitDate, Map<String,Integer> orderedMenuItems) {
+        EventManager eventManager = new EventManager();
+        return eventManager.getEventBenefitDetails(totalOrderAmountBeforeDiscount, visitDate, orderedMenuItems);
     }
 }
