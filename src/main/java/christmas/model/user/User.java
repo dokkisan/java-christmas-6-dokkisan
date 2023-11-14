@@ -1,25 +1,14 @@
 package christmas.model.user;
 
-import christmas.model.ErrorMessage;
-
-import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.util.Map;
 
 public class User {
     private final LocalDate expectedVisitDate;
+    private final Map<String, Integer> expectedMenuItems;
 
-    public User(int expectedVisitDate) {
-        this.expectedVisitDate = validate(expectedVisitDate);
-    }
-
-    private LocalDate validate(int expectedVisitDate) {
-        final int YEAR = 2023;
-        final int MONTH = 12;
-
-        try {
-            return LocalDate.of(YEAR, MONTH, expectedVisitDate);
-        } catch (DateTimeException e) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_DAYS_IN_DECEMBER.getMessage());
-        }
+    private User(LocalDate expectedVisitDate, Map<String, Integer> expectedMenuItems) {
+        this.expectedVisitDate = expectedVisitDate;
+        this.expectedMenuItems = expectedMenuItems;
     }
 }
