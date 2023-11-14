@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class WeekendDiscountPolicy {
-    private final List<DayOfWeek> weekend = new ArrayList<>(List.of(DayOfWeek.FRIDAY, DayOfWeek.SATURDAY));
+    private final List<DayOfWeek> WEEKEND = new ArrayList<>(List.of(DayOfWeek.FRIDAY, DayOfWeek.SATURDAY));
 
     public int calculateBenefitAmount(LocalDate visitDate, Map<String, Integer> menuItemsOrdered) {
         if (isWeekend(visitDate)) {
@@ -24,8 +24,7 @@ public class WeekendDiscountPolicy {
     }
 
     private boolean isWeekend(LocalDate visitDate) {
-        DayOfWeek visitDayOfWeek = DataConverter.convertToDayOfWeek(visitDate);
-        return weekend.stream().anyMatch(day -> day.equals(visitDayOfWeek));
+        return WEEKEND.stream().anyMatch(day -> day.equals(DataConverter.convertToDayOfWeek(visitDate)));
     }
 
     private int checkMainDishOrderQuantity(Map<String, Integer> orderedMenuItems) {
