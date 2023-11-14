@@ -27,12 +27,12 @@ public class DecemberEventPlannerController {
     public void run() {
         outputView.print(OperationMessage.GREETING_AND_INTRODUCE.getMessage());
         LocalDate visitDate = getExpectedVisitDate();
-        Map<String, Integer> menuItems = getExpectedMenuItems();
-        User user = new User(visitDate, menuItems);
-        outputView.printOrderedMenuItems(menuItems);
-        int totalOrderAmountBeforeDiscount = EventCalculator.calculateTotalOrderAmountBeforeDiscount(menuItems);
+        Map<String, Integer> orderedMenuItems = getExpectedMenuItems();
+        User user = new User(visitDate, orderedMenuItems);
+        outputView.printOrderedMenuItems(orderedMenuItems);
+        int totalOrderAmountBeforeDiscount = EventCalculator.calculateTotalOrderAmountBeforeDiscount(orderedMenuItems);
         outputView.print(totalOrderAmountBeforeDiscount);
-
+        Optional<List<EventBenefitDetails>> eventPlanResult = getEventBenefitDetails(totalOrderAmountBeforeDiscount, visitDate, orderedMenuItems);
     }
 
     private LocalDate getExpectedVisitDate() {
@@ -60,7 +60,7 @@ public class DecemberEventPlannerController {
     }
 
     private Optional<List<EventBenefitDetails>> getEventBenefitDetails(
-            int totalOrderAmountBeforeDiscount, LocalDate visitDate, Map<String,Integer> orderedMenuItems) {
+            int totalOrderAmountBeforeDiscount, LocalDate visitDate, Map<String, Integer> orderedMenuItems) {
         EventManager eventManager = new EventManager();
         return eventManager.getEventBenefitDetails(totalOrderAmountBeforeDiscount, visitDate, orderedMenuItems);
     }

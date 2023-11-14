@@ -1,5 +1,7 @@
 package christmas.model.event;
 
+import christmas.model.menu.MenuItem;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +20,7 @@ public class EventManager {
         checkWeekendDiscountPolicy(visitDate, menuItems);
         checkSpecialDiscountPolicy(visitDate);
         checkChristmasDDayDiscountPolicy(visitDate);
+        checkGiftPolicy(totalOrderAmountBeforeDiscount, menuItems);
         return Optional.ofNullable(benefits);
     }
 
@@ -52,5 +55,14 @@ public class EventManager {
         benefits.add(new EventBenefitDetails(
                 DecemberEvents.CHRISTMAS_D_DAY.getName(),
                 christmasDDayDiscountPolicy.calculateBenefitAmount(visitDate)));
+    }
+
+    private void checkGiftPolicy(int totalOrderAmountBeforeDiscount, Map<String, Integer> menuItems) {
+        GiftPolicy giftPolicy = new GiftPolicy();
+        if (giftPolicy.isSatisfied(totalOrderAmountBeforeDiscount)) {
+            benefits.add(new EventBenefitDetails(
+                    DecemberEvents.GIFT.getName(),
+                    MenuItem.CHAMPAGNE.getPrice()));
+        }
     }
 }
