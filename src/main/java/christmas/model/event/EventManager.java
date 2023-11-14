@@ -42,4 +42,8 @@ public class EventManager {
                 DecemberEvents.CHRISTMAS_D_DAY.getName(),
                 christmasDDayDiscountPolicy.calculateBenefitAmount(visitDate)));
     }
+
+    private void checkGiftPolicy() {
+
+    }
 }
