@@ -1,5 +1,6 @@
 package christmas.util;
 
+import christmas.model.event.DecemberEvents;
 import christmas.model.event.EventBenefitDetails;
 import christmas.model.menu.MenuItem;
 
@@ -27,6 +28,19 @@ public class EventCalculator {
 
     public static int calculateTotalBenefitAmount(List<EventBenefitDetails> eventPlanBenefitResult) {
         return eventPlanBenefitResult.stream()
+                .flatMapToInt(eventBenefitDetails -> IntStream.of(eventBenefitDetails.getBenefitAmount()))
+                .sum();
+    }
+
+    public static int calculateExpectedPaymentAfterDiscount(
+            int totalOrderAmountBeforeDiscount, List<EventBenefitDetails> eventPlanBenefitResult) {
+        int totalBenefitAmount = calculateTotalDiscountAmountWithoutGift(eventPlanBenefitResult);
+        return totalOrderAmountBeforeDiscount - totalBenefitAmount;
+    }
+
+    private static int calculateTotalDiscountAmountWithoutGift(List<EventBenefitDetails> eventPlanBenefitResult) {
+        return eventPlanBenefitResult.stream()
+                .filter(eventBenefitDetails -> !eventBenefitDetails.getName().equals(DecemberEvents.GIFT.getName()))
                 .flatMapToInt(eventBenefitDetails -> IntStream.of(eventBenefitDetails.getBenefitAmount()))
                 .sum();
     }

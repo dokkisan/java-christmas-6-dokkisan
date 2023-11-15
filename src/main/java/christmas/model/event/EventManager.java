@@ -1,6 +1,7 @@
 package christmas.model.event;
 
 import christmas.model.menu.MenuItem;
+import christmas.util.EventCalculator;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -30,6 +31,11 @@ public class EventManager {
             }
         }
         return count;
+    }
+
+    public int getExpectedPaymentAfterDiscount(int totalOrderAmountBeforeDiscount) {
+        return EventCalculator.calculateExpectedPaymentAfterDiscount(
+                totalOrderAmountBeforeDiscount, eventPlanBenefitResult);
     }
 
     private List<EventBenefitDetails> calculateEventBenefitDetails(
