@@ -34,6 +34,7 @@ public class DecemberEventPlannerController {
         List<EventBenefitDetails> eventPlanBenefitResult = getEventBenefitDetails(totalOrderAmountBeforeDiscount, visitDate, orderedMenuItems);
         int totalBenefitAmount = EventCalculator.calculateTotalBenefitAmount(eventPlanBenefitResult);
         outputView.printTotalBenefitsAmount(totalBenefitAmount);
+        outputView.printBenefitsDetails(eventPlanBenefitResult);
     }
 
     private LocalDate getExpectedVisitDate() {
