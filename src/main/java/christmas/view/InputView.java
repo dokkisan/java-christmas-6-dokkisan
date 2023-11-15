@@ -16,6 +16,10 @@ public class InputView {
         return validate(Console.readLine());
     }
 
+    public void closeConsole() {
+        Console.close();
+    }
+
     private List<String> validate(String inputExpectedMenuItems) {
         final String COMMA = ",";
         final String HYPHEN = "-";

@@ -1,10 +1,10 @@
 package christmas.controller;
 
-import christmas.model.message.OperationMessage;
 import christmas.model.DecemberEventBadge;
 import christmas.model.event.EventBenefitDetails;
 import christmas.model.event.EventManager;
 import christmas.model.menu.MenuManager;
+import christmas.model.message.OperationMessage;
 import christmas.model.user.User;
 import christmas.util.DateConverter;
 import christmas.util.EventCalculator;
@@ -27,6 +27,7 @@ public class EventController {
     public void run() {
         outputView.printTotalOrderAmountBeforeDiscount(OperationMessage.GREETING_AND_INTRODUCE.getMessage());
         User user = new User(getExpectedVisitDate(), getExpectedMenuItems());
+        inputView.closeConsole();
         outputView.printOrderedMenuItems(user.getOrderedMenuItems());
         int totalOrderAmountBeforeDiscount = EventCalculator.calculateTotalOrderAmountBeforeDiscount(user.getOrderedMenuItems());
         outputView.printTotalOrderAmountBeforeDiscount(totalOrderAmountBeforeDiscount);
