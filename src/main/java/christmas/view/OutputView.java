@@ -2,6 +2,7 @@ package christmas.view;
 
 import christmas.OperationMessage;
 import christmas.model.event.EventBenefitDetails;
+import christmas.model.menu.MenuItem;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -42,7 +43,8 @@ public class OutputView {
 
     public void printBenefitsDetails(List<EventBenefitDetails> eventPlanBenefitResult) {
         System.out.println(OperationMessage.BENEFITS_DETAILS.getMessage());
-        if (eventPlanBenefitResult.stream().allMatch(eventBenefitDetails -> eventBenefitDetails.getBenefitAmount()==0)) {
+        if (eventPlanBenefitResult.stream()
+                .allMatch(eventBenefitDetails -> eventBenefitDetails.getBenefitAmount() == 0)) {
             System.out.println("없음");
         }
         printBenefitDetailsMoreThanOne(eventPlanBenefitResult);
@@ -58,10 +60,20 @@ public class OutputView {
                     }
                     System.out.println(
                             eventBenefitDetails.getName() + ": "
-                            + new DecimalFormat("-###,###").format(eventBenefitDetails.getBenefitAmount()) + "원");
+                                    + new DecimalFormat("-###,###")
+                                    .format(eventBenefitDetails.getBenefitAmount()) + "원");
                 });
     }
 
+    public void printChampagneGifted(int count) {
+        System.out.println(OperationMessage.GIFT_MENU.getMessage());
+        if (count < 0) {
+            System.out.println("없음");
+            return;
+        }
+        System.out.println(MenuItem.CHAMPAGNE.getName() + " " + count + "개");
+        printBlankLine();
+    }
 
     public void printBlankLine() {
         System.out.println();

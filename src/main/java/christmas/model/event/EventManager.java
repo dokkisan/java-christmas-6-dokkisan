@@ -22,6 +22,16 @@ public class EventManager {
         return calculateEventBenefitDetails(totalOrderAmountBeforeDiscount, visitDate, menuItems);
     }
 
+    public int getChampagneGiftedCount() {
+        int count = 0;
+        for (EventBenefitDetails details : eventPlanBenefitResult) {
+            if (details.getName().equals(DecemberEvents.GIFT.getName())) {
+                count = details.getBenefitAmount() / MenuItem.CHAMPAGNE.getPrice();
+            }
+        }
+        return count;
+    }
+
     private List<EventBenefitDetails> calculateEventBenefitDetails(
             int totalOrderAmountBeforeDiscount, LocalDate visitDate, Map<String, Integer> menuItems) {
         eventPlanBenefitResult = new ArrayList<>();

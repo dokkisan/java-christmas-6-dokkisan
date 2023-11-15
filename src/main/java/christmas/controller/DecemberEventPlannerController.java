@@ -28,11 +28,17 @@ public class DecemberEventPlannerController {
         LocalDate visitDate = getExpectedVisitDate();
         Map<String, Integer> orderedMenuItems = getExpectedMenuItems();
         User user = new User(visitDate, orderedMenuItems);
-        outputView.printOrderedMenuItems(orderedMenuItems);
+        outputView.printOrderedMenuItems(orderedMenuItems); // 분리
         int totalOrderAmountBeforeDiscount = EventCalculator.calculateTotalOrderAmountBeforeDiscount(orderedMenuItems);
-        outputView.printTotalOrderAmountBeforeDiscount(totalOrderAmountBeforeDiscount);
+        outputView.printTotalOrderAmountBeforeDiscount(totalOrderAmountBeforeDiscount); // 분리
         List<EventBenefitDetails> eventPlanBenefitResult = getEventBenefitDetails(totalOrderAmountBeforeDiscount, visitDate, orderedMenuItems);
         int totalBenefitAmount = EventCalculator.calculateTotalBenefitAmount(eventPlanBenefitResult);
+        printEventBenefitDetails(totalBenefitAmount, eventPlanBenefitResult);
+    }
+
+    private void printEventBenefitDetails(int totalBenefitAmount, List<EventBenefitDetails> eventPlanBenefitResult) {
+        EventManager eventManager = new EventManager();
+        outputView.printChampagneGifted(eventManager.getChampagneGiftedCount());
         outputView.printTotalBenefitsAmount(totalBenefitAmount);
         outputView.printBenefitsDetails(eventPlanBenefitResult);
     }
