@@ -1,6 +1,6 @@
 package christmas.util;
 
-import christmas.model.ErrorMessage;
+import christmas.model.message.ErrorMessage;
 
 import java.time.DateTimeException;
 import java.time.DayOfWeek;

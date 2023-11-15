@@ -1,6 +1,6 @@
 package christmas.view;
 
-import christmas.OperationMessage;
+import christmas.model.message.OperationMessage;
 import christmas.model.DecemberEventBadge;
 import christmas.model.event.EventBenefitDetails;
 import christmas.model.menu.MenuItem;

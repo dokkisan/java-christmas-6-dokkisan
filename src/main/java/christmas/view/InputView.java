@@ -1,7 +1,7 @@
 package christmas.view;
 
 import camp.nextstep.edu.missionutils.Console;
-import christmas.model.ErrorMessage;
+import christmas.model.message.ErrorMessage;
 
 import java.util.ArrayList;
 import java.util.List;

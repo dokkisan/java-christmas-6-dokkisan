@@ -1,6 +1,6 @@
 package christmas.model.menu;
 
-import christmas.model.ErrorMessage;
+import christmas.model.message.ErrorMessage;
 import christmas.util.DataConverter;
 
 import java.util.*;

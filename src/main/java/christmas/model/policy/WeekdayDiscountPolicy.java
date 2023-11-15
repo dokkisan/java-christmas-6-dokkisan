@@ -1,4 +1,4 @@
-package christmas.model.event;
+package christmas.model.policy;
 
 import christmas.model.menu.MenuItem;
 import christmas.util.DateConverter;

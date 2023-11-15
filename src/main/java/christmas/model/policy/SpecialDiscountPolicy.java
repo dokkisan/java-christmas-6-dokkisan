@@ -1,4 +1,4 @@
-package christmas.model.event;
+package christmas.model.policy;
 
 import christmas.util.DateConverter;
 

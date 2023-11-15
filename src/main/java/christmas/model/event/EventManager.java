@@ -2,6 +2,10 @@ package christmas.model.event;
 
 import christmas.model.DecemberEventBadge;
 import christmas.model.menu.MenuItem;
+import christmas.model.policy.ChristmasDDayDiscountPolicy;
+import christmas.model.policy.SpecialDiscountPolicy;
+import christmas.model.policy.WeekdayDiscountPolicy;
+import christmas.model.policy.WeekendDiscountPolicy;
 import christmas.util.EventCalculator;
 
 import java.time.LocalDate;

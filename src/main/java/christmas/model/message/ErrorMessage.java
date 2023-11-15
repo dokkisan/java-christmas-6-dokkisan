@@ -1,4 +1,4 @@
-package christmas.model;
+package christmas.model.message;
 
 public enum ErrorMessage {
     INVALID_DAYS_IN_DECEMBER("유효하지 않은 날짜입니다. 다시 입력해 주세요."),
