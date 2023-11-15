@@ -2,10 +2,7 @@ package christmas.model.event;
 
 import christmas.model.DecemberEventBadge;
 import christmas.model.menu.MenuItem;
-import christmas.model.policy.ChristmasDDayDiscountPolicy;
-import christmas.model.policy.SpecialDiscountPolicy;
-import christmas.model.policy.WeekdayDiscountPolicy;
-import christmas.model.policy.WeekendDiscountPolicy;
+import christmas.model.policy.*;
 import christmas.util.EventCalculator;
 
 import java.time.LocalDate;
@@ -60,7 +57,7 @@ public class EventManager {
         checkWeekendDiscountPolicy(visitDate, menuItems);
         checkSpecialDiscountPolicy(visitDate);
         checkChristmasDDayDiscountPolicy(visitDate);
-        checkGiftPolicy(totalOrderAmountBeforeDiscount, menuItems);
+        checkGiftPolicy(totalOrderAmountBeforeDiscount);
         return eventPlanBenefitResult;
     }
 
@@ -97,7 +94,7 @@ public class EventManager {
                 christmasDDayDiscountPolicy.calculateBenefitAmount(visitDate)));
     }
 
-    private void checkGiftPolicy(int totalOrderAmountBeforeDiscount, Map<String, Integer> menuItems) {
+    private void checkGiftPolicy(int totalOrderAmountBeforeDiscount) {
         GiftPolicy giftPolicy = new GiftPolicy();
         if (giftPolicy.isSatisfied(totalOrderAmountBeforeDiscount)) {
             eventPlanBenefitResult.add(new EventBenefitDetails(
