@@ -1,9 +1,12 @@
 package christmas.util;
 
+import christmas.model.event.EventBenefitDetails;
 import christmas.model.menu.MenuItem;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 public class EventCalculator {
 
@@ -20,5 +23,11 @@ public class EventCalculator {
             totalOrderAmountBeforeDiscount += menuPrice;
         }
         return totalOrderAmountBeforeDiscount;
+    }
+
+    public static int calculateTotalBenefitAmount(List<EventBenefitDetails> eventPlanBenefitResult) {
+        return eventPlanBenefitResult.stream()
+                .flatMapToInt(eventBenefitDetails -> IntStream.of(eventBenefitDetails.getBenefitAmount()))
+                .sum();
     }
 }
