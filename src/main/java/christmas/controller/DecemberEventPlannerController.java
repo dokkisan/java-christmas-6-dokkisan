@@ -64,6 +64,6 @@ public class DecemberEventPlannerController {
     private List<EventBenefitDetails> getEventBenefitDetails(
             int totalOrderAmountBeforeDiscount, LocalDate visitDate, Map<String, Integer> orderedMenuItems) {
         EventManager eventManager = new EventManager();
-        return eventManager.getEventBenefitDetails(totalOrderAmountBeforeDiscount, visitDate, orderedMenuItems);
+        return eventManager.getBenefits(totalOrderAmountBeforeDiscount, visitDate, orderedMenuItems);
     }
 }

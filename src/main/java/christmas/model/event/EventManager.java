@@ -10,9 +10,21 @@ import java.util.Map;
 public class EventManager {
     private static List<EventBenefitDetails> benefits;
 
-    public List<EventBenefitDetails> getEventBenefitDetails(
+    public List<EventBenefitDetails> getBenefits(
             int totalOrderAmountBeforeDiscount, LocalDate visitDate, Map<String, Integer> menuItems) {
-        checkSatisfied(totalOrderAmountBeforeDiscount);
+
+        if (!isSatisfied(totalOrderAmountBeforeDiscount)) {
+            List<EventBenefitDetails> unsatisfied = new ArrayList<>();
+            for (DecemberEvents event : DecemberEvents.values()) {
+                unsatisfied.add(new EventBenefitDetails(event.getName(), 0));
+            }
+            return unsatisfied;
+        }
+        return calculateEventBenefitDetails(totalOrderAmountBeforeDiscount, visitDate, menuItems);
+    }
+
+    private List<EventBenefitDetails> calculateEventBenefitDetails(
+            int totalOrderAmountBeforeDiscount, LocalDate visitDate, Map<String, Integer> menuItems) {
         benefits = new ArrayList<>();
         checkWeekdayDiscountPolicy(visitDate, menuItems);
         checkWeekendDiscountPolicy(visitDate, menuItems);
@@ -22,15 +34,9 @@ public class EventManager {
         return benefits;
     }
 
-    private List<EventBenefitDetails> checkSatisfied(int totalOrderAmountBeforeDiscount) {
+    private boolean isSatisfied(int totalOrderAmountBeforeDiscount) {
         final int MIN_ORDER_AMOUNT = 10_000;
-        List<EventBenefitDetails> notSatisfied = new ArrayList<>();
-        if (!(totalOrderAmountBeforeDiscount < MIN_ORDER_AMOUNT)) {
-            for (DecemberEvents event : DecemberEvents.values()) {
-                notSatisfied.add(new EventBenefitDetails(event.getName(), 1));
-            }
-        }
-        return notSatisfied;
+        return totalOrderAmountBeforeDiscount > MIN_ORDER_AMOUNT;
     }
 
     private void checkWeekdayDiscountPolicy(LocalDate visitDate, Map<String, Integer> menuItems) {
