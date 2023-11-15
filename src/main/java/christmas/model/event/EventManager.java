@@ -1,5 +1,6 @@
 package christmas.model.event;
 
+import christmas.model.DecemberEventBadge;
 import christmas.model.menu.MenuItem;
 import christmas.util.EventCalculator;
 
@@ -10,6 +11,16 @@ import java.util.Map;
 
 public class EventManager {
     private static List<EventBenefitDetails> eventPlanBenefitResult = new ArrayList<>();
+    private DecemberEventBadge decemberEventBadge;
+
+    public void createEventBadge() {
+        int totalBenefitAmount = EventCalculator.calculateTotalBenefitAmount(eventPlanBenefitResult);
+        this.decemberEventBadge = EventCalculator.calculateEventBadge(totalBenefitAmount);
+    }
+
+    public boolean isAssignedBadge(DecemberEventBadge badge) {
+        return decemberEventBadge.equals(badge);
+    }
 
     public List<EventBenefitDetails> getEventPlanBenefitResult(
             int totalOrderAmountBeforeDiscount, LocalDate visitDate, Map<String, Integer> menuItems) {

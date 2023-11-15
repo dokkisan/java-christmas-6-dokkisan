@@ -1,6 +1,7 @@
 package christmas.controller;
 
 import christmas.OperationMessage;
+import christmas.model.DecemberEventBadge;
 import christmas.model.event.EventBenefitDetails;
 import christmas.model.event.EventManager;
 import christmas.model.menu.MenuManager;
@@ -36,12 +37,24 @@ public class DecemberEventPlannerController {
         printEventBenefitDetails(totalOrderAmountBeforeDiscount, totalBenefitAmount, eventPlanBenefitResult);
     }
 
-    private void printEventBenefitDetails(int totalOrderAmountBeforeDiscount, int totalBenefitAmount, List<EventBenefitDetails> eventPlanBenefitResult) {
+    private void printEventBenefitDetails(
+            int totalOrderAmountBeforeDiscount, int totalBenefitAmount, List<EventBenefitDetails> eventPlanBenefitResult) {
         EventManager eventManager = new EventManager();
         outputView.printChampagneGifted(eventManager.getChampagneGiftedCount());
         outputView.printTotalBenefitsAmount(totalBenefitAmount);
         outputView.printBenefitsDetails(eventPlanBenefitResult);
         outputView.printExpectedPaymentAfterDiscount(eventManager.getExpectedPaymentAfterDiscount(totalOrderAmountBeforeDiscount));
+        printAssignedDecemberEventBadge();
+    }
+
+    private void printAssignedDecemberEventBadge() {
+        EventManager eventManager = new EventManager();
+        eventManager.createEventBadge();
+        for (DecemberEventBadge badge : DecemberEventBadge.values()) {
+            if (eventManager.isAssignedBadge(badge)) {
+                outputView.printAssignedBadge(badge);
+            }
+        }
     }
 
     private LocalDate getExpectedVisitDate() {

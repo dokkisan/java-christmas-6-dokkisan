@@ -1,5 +1,6 @@
 package christmas.util;
 
+import christmas.model.DecemberEventBadge;
 import christmas.model.event.DecemberEvents;
 import christmas.model.event.EventBenefitDetails;
 import christmas.model.menu.MenuItem;
@@ -10,6 +11,19 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 public class EventCalculator {
+
+    public static DecemberEventBadge calculateEventBadge(int totalBenefitAmount) {
+        if (totalBenefitAmount >= DecemberEventBadge.SANTA.getAmountCondition()) {
+            return DecemberEventBadge.SANTA;
+        }
+        if (totalBenefitAmount >= DecemberEventBadge.TREE.getAmountCondition()) {
+            return DecemberEventBadge.TREE;
+        }
+        if (totalBenefitAmount >= DecemberEventBadge.STAR.getAmountCondition()) {
+            return DecemberEventBadge.STAR;
+        }
+        return DecemberEventBadge.NONE;
+    }
 
     public static int calculateTotalOrderAmountBeforeDiscount(Map<String, Integer> orderedMenuItems) {
         int totalOrderAmountBeforeDiscount = 0;

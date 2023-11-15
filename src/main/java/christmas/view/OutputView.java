@@ -1,6 +1,7 @@
 package christmas.view;
 
 import christmas.OperationMessage;
+import christmas.model.DecemberEventBadge;
 import christmas.model.event.EventBenefitDetails;
 import christmas.model.menu.MenuItem;
 
@@ -54,6 +55,7 @@ public class OutputView {
     public void printExpectedPaymentAfterDiscount(int payment) {
         System.out.println(OperationMessage.TOTAL_AMOUNT_DUE_AFTER_DISCOUNT.getMessage());
         System.out.println(new DecimalFormat("###,###").format(payment));
+        printBlankLine();
     }
 
     private static void printBenefitDetailsMoreThanOne(List<EventBenefitDetails> eventPlanBenefitResult) {
@@ -78,6 +80,11 @@ public class OutputView {
         }
         System.out.println(MenuItem.CHAMPAGNE.getName() + " " + count + "개");
         printBlankLine();
+    }
+
+    public void printAssignedBadge(DecemberEventBadge badge) {
+        System.out.println(OperationMessage.DECEMBER_EVENT_BADGE.getMessage());
+        System.out.println(badge.getName() + " " + badge.getBadgeEmoji());
     }
 
     public void printBlankLine() {
