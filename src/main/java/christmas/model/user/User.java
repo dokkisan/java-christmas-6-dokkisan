@@ -4,11 +4,19 @@ import java.time.LocalDate;
 import java.util.Map;
 
 public class User {
-    private final LocalDate expectedVisitDate;
-    private final Map<String, Integer> expectedMenuItems;
+    private final LocalDate visitDate;
+    private final Map<String, Integer> orderedMenuItems;
 
-    public User(LocalDate expectedVisitDate, Map<String, Integer> expectedMenuItems) {
-        this.expectedVisitDate = expectedVisitDate;
-        this.expectedMenuItems = expectedMenuItems;
+    public User(LocalDate visitDate, Map<String, Integer> orderedMenuItems) {
+        this.visitDate = visitDate;
+        this.orderedMenuItems = orderedMenuItems;
+    }
+
+    public LocalDate getVisitDate() {
+        return visitDate;
+    }
+
+    public Map<String, Integer> getOrderedMenuItems() {
+        return orderedMenuItems;
     }
 }

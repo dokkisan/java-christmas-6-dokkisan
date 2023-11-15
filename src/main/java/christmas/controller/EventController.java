@@ -1,6 +1,6 @@
 package christmas.controller;
 
-import christmas.OperationMessage;
+import christmas.model.message.OperationMessage;
 import christmas.model.DecemberEventBadge;
 import christmas.model.event.EventBenefitDetails;
 import christmas.model.event.EventManager;
@@ -15,24 +15,22 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
-public class DecemberEventPlannerController {
+public class EventController {
     private final InputView inputView;
     private final OutputView outputView;
 
-    public DecemberEventPlannerController() {
+    public EventController() {
         this.inputView = new InputView();
         this.outputView = new OutputView();
     }
 
     public void run() {
         outputView.printTotalOrderAmountBeforeDiscount(OperationMessage.GREETING_AND_INTRODUCE.getMessage());
-        LocalDate visitDate = getExpectedVisitDate();
-        Map<String, Integer> orderedMenuItems = getExpectedMenuItems();
-        User user = new User(visitDate, orderedMenuItems);
-        outputView.printOrderedMenuItems(orderedMenuItems); // 분리
-        int totalOrderAmountBeforeDiscount = EventCalculator.calculateTotalOrderAmountBeforeDiscount(orderedMenuItems);
-        outputView.printTotalOrderAmountBeforeDiscount(totalOrderAmountBeforeDiscount); // 분리
-        List<EventBenefitDetails> eventPlanBenefitResult = getEventBenefitDetails(totalOrderAmountBeforeDiscount, visitDate, orderedMenuItems);
+        User user = new User(getExpectedVisitDate(), getExpectedMenuItems());
+        outputView.printOrderedMenuItems(user.getOrderedMenuItems());
+        int totalOrderAmountBeforeDiscount = EventCalculator.calculateTotalOrderAmountBeforeDiscount(user.getOrderedMenuItems());
+        outputView.printTotalOrderAmountBeforeDiscount(totalOrderAmountBeforeDiscount);
+        List<EventBenefitDetails> eventPlanBenefitResult = getEventBenefitDetails(totalOrderAmountBeforeDiscount, user.getVisitDate(), user.getOrderedMenuItems());
         int totalBenefitAmount = EventCalculator.calculateTotalBenefitAmount(eventPlanBenefitResult);
         printEventBenefitDetails(totalOrderAmountBeforeDiscount, totalBenefitAmount, eventPlanBenefitResult);
     }
